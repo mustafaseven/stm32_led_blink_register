@@ -35,34 +35,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := led_button
+BUILD_ARTIFACT_NAME := led_button_register
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX := 
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME).$(BUILD_ARTIFACT_EXTENSION)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-led_button.elf \
+led_button_register.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-led_button.list \
+led_button_register.list \
 
 OBJCOPY_BIN += \
-led_button.bin \
+led_button_register.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: led_button.elf secondary-outputs
+main-build: led_button_register.elf secondary-outputs
 
 # Tool invocations
-led_button.elf: $(OBJS) $(USER_OBJS) C:\Users\W10\STM32CubeIDE\workspace_1.6.0\led_button\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "led_button.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\W10\STM32CubeIDE\workspace_1.6.0\led_button\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="led_button.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+led_button_register.elf: $(OBJS) $(USER_OBJS) D:\Elektronik-Yazilim\Workspace\STM32CubeIDE\workspace_1.6.0\led_button_register\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "led_button_register.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Elektronik-Yazilim\Workspace\STM32CubeIDE\workspace_1.6.0\led_button_register\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="led_button_register.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -71,13 +71,13 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-led_button.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "led_button.list"
+led_button_register.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "led_button_register.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-led_button.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "led_button.bin"
+led_button_register.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "led_button_register.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 

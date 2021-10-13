@@ -62,6 +62,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -78,14 +79,10 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+
   /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  /* USER CODE BEGIN 2 */
-  RCC->AHB1ENR |= (1<<3);     //bit islemleriyle 3.bite 1 verildi.
-  RCC->AHB1ENR |= 0x00000001; //0.bite 1 verildi.
+  RCC->AHB1ENR |= (1<<3); //bit islemleriyle 3.bite 1 verildi.
+  RCC->AHB1ENR |= (1<<0); //bit islemleriyle 0.bite 1 verildi.
 
 
   GPIOD->MODER &= ~(1<<27); //13.pin output secildi.
@@ -104,37 +101,37 @@ int main(void)
   GPIOD->OTYPER &= ~(1<<12); //12.pine 0 verildi
   GPIOD->OTYPER &= ~(1<<13); //13.pine 0 verildi
   GPIOD->OTYPER &= ~(1<<14); //14.pine 0 verildi
-  GPIOD->OTYPER &= ~(1<<15); //15.pine 0 verildi
-
+  GPIOD->OTYPER &= ~(1<<15); //14.pine 0 verildi
 
   GPIOA->MODER &= ~(1<<1);
-  GPIOA->MODER &= ~(0x00000001);
+  GPIOA->MODER &= ~(1<<0);
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-	  if(GPIOA->IDR & (0x00000001))
-	  	  {
-	  		  GPIOD->ODR &= ~(1<<12); // ODR'nin 12. bitine 0 verilir.
-	  		  GPIOD->ODR |= (1<<13);  // ODR'nin 13. bitine 1 verilir ve led yanar.
-	  		  GPIOD->ODR |= (1<<14);  // ODR'nin 14. bitine 1 verilir ve led yanar.
-	  		  GPIOD->ODR &= ~(1<<15); // ODR'nin 15. bitine 0 verilir.
-	  		  HAL_Delay(500);         // 500 milisaniye beklenir.
-	  		  GPIOD->ODR |= (1<<12);  // ODR'nin 12. bitine 1 verilir ve led yanar.
-	  		  GPIOD->ODR &= ~(1<<13); // ODR'nin 13. bitine 0 verilir.
-	  		  GPIOD->ODR &= ~(1<<14); // ODR'nin 14. bitine 0 verilir.
-	  		  GPIOD->ODR |= (1<<15);  // ODR'nin 15. bitine 1 verilir ve led yanar.
-	  		  HAL_Delay(500);
-	  	  }
-
-
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
-  }
+   {
+       // IDR'nin 0. biti okunur. Gelen değer 1 ise yani butona basılmışsa if'e girilir.
+ 	  if(GPIOA->IDR & 1<<0)
+ 	  {
+ 		  GPIOD->ODR &= ~(1<<12);// ODR'nin 12. bitine 0 verilir.
+ 		  GPIOD->ODR |= (1<<13);// ODR'nin 13. bitine 1 verilir ve led yanar.
+ 		  GPIOD->ODR |= (1<<14);// ODR'nin 14. bitine 1 verilir ve led yanar.
+ 		  GPIOD->ODR &= ~(1<<15);// ODR'nin 15. bitine 0 verilir.
+ 		  HAL_Delay(500); // 500 milisaniye beklenir.
+ 		  GPIOD->ODR |= (1<<12);// ODR'nin 12. bitine 1 verilir ve led yanar.
+ 		  GPIOD->ODR &= ~(1<<13);// ODR'nin 13. bitine 0 verilir.
+ 		  GPIOD->ODR &= ~(1<<14);// ODR'nin 14. bitine 0 verilir.
+ 		  GPIOD->ODR |= (1<<15);// ODR'nin 15. bitine 1 verilir ve led yanar.
+ 		  HAL_Delay(500); // 500 milisaniye beklenir.
+ 	  }
+   }
   /* USER CODE END 3 */
 }
 
